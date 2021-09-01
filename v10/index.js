@@ -62,3 +62,6 @@ for (let perModal = 0; perModal < 30; perModal++) {
 //perubahan 5666
 // perubahan 4
 // perubahan 50000
+// perubahan 6000
+// perubahan 7000
+// data baru
