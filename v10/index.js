@@ -3,6 +3,7 @@ const random = require('random');
 const labaBersih_PerModal = [];
 const pulsa = [5000, 10000, 20000, 40000, 50000, 100000];
 const modalPulsa = [];
+const pendapatanPulsa = [];
 let pembulatan = pulsa.reduce((acc, cca) => acc + cca);
 modalPulsa.push(pembulatan);
 for (let perModal = 0; perModal < 30; perModal++) {
@@ -43,26 +44,40 @@ for (let perModal = 0; perModal < 30; perModal++) {
   console.log(`ini adalah riwayat pembeli ${riwayatPembeli}`);
   const pendapatan = riwayatPembeli.reduce((acc, cca) => acc + cca);
   const sisaPulsaModal = sisaPulsa.reduce((acc, cca) => acc + cca);
+  let saldo_jalan = modalPulsa.slice(-1)[0] + pendapatanPulsa.slice(-1)[0];
   if (perModal > 0) {
-    console.log(
-      `isi saldo baru sebesar :${modalPulsa[0]} + Sisa saldo Pulsa Modal sebelumnya`
-    );
-    console.log(`saldo berjalan :${modal_ter_awal}`);
+    console.log(`saldo Awal :${modalPulsa[0]}`);
+    console.log(`isi saldo + sisa saldo sebelumnya :${saldo_jalan} `);
+
+    console.log(`Pendapatan : ${pendapatan}`);
+    console.log(`Pendapatan Bersih : ${pendapatan - saldo_jalan}`);
+    let hasilP = pendapatan - saldo_jalan;
+    if (hasilP > 0) {
+      labaBersih_PerModal.push(hasilP);
+      pendapatanPulsa.push(pendapatan - hasilP);
+    } else {
+      labaBersih_PerModal.push(0);
+      pendapatanPulsa.push(pendapatan);
+    }
   } else {
-    console.log(`modal awal :${modal_ter_awal}`);
+    console.log(`modal awal :${modalPulsa[0]}`);
+    console.log(`Pendapatan : ${pendapatan}`);
+    console.log(`Pendapatan Bersih : ${pendapatan - modalPulsa[0]}`);
+    let hasilP = pendapatan - modalPulsa[0];
+    if (hasilP > 0) {
+      labaBersih_PerModal.push(hasilP);
+      pendapatanPulsa.push(pendapatan - hasilP);
+    } else {
+      labaBersih_PerModal.push(0);
+      pendapatanPulsa.push(pendapatan);
+    }
   }
 
-  console.log(`Pendapatan : ${pendapatan}`);
-  console.log(`Pendapatan Bersih : ${pendapatan - modal_ter_awal}`);
   console.log(`Sisa saldo Pulsa Modal :${sisaPulsaModal}`);
-  labaBersih_PerModal.push(pendapatan - modal_ter_awal);
+
   modalPulsa.push(sisaPulsaModal);
 }
-//baru nih
-//perubahan 5666
-// perubahan 4
-// benar kah
-// perubahan 6000
-// perubahan 7000
-// data baru
-// haha data 10
+
+console.log(labaBersih_PerModal);
+let bersihaja = labaBersih_PerModal.reduce((acc, cca) => acc + cca);
+console.log(`Pendapat Bersih adalah : ${bersihaja}`);
